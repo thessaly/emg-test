@@ -1,0 +1,28 @@
+# Python virtual environment
+.venv/
+env/
+venv/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Jupyter Book build artifacts
+_build/
+.jupyter_cache/
+
+# Sphinx build artifacts
+.doctrees/
+*.doctree
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VSCode settings (optional)
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
