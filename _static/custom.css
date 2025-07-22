@@ -133,7 +133,9 @@ code, pre, .highlight {
   font-size: small;
   margin: 2em;
 }
-
+.prev-next-area {
+background: #d3ebf0;
+}
 .cell_output.docutils.container img {
   height: 50% !important;
 }
