@@ -1,0 +1,687 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>An interactive open-source course in muscle physiology and electromyography for undergraduates &#8212; Open-source course in muscle physiology &amp; EMG</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=262ab023" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Ch. 1: Muscle physiology and EMG basics" href="chapter-1.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Open-source course in muscle physiology & EMG - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Open-source course in muscle physiology & EMG - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    An interactive open-source course in muscle physiology and electromyography for undergraduates
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapter-1.html">Ch. 1: Muscle physiology and EMG basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter-2.html">Ch. 2: Graphing and visually exploring EMG data</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/emckiernan/emg-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/emckiernan/emg-book/issues/new?title=Issue%20on%20page%20%2Fintro.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/intro.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>An interactive open-source course in muscle physiology and electromyography for undergraduates</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-this-e-book">How to use this e-book</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#educational-specifications">Educational specifications</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#licensing">Licensing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funding">Funding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="an-interactive-open-source-course-in-muscle-physiology-and-electromyography-for-undergraduates">
+<h1>An interactive open-source course in muscle physiology and electromyography for undergraduates<a class="headerlink" href="#an-interactive-open-source-course-in-muscle-physiology-and-electromyography-for-undergraduates" title="Link to this heading">#</a></h1>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm sd-outline-primary docutils">
+<div class="sd-card-body docutils">
+<p class="sd-card-text"><strong>Authors:</strong> Erin McKiernan<br />
+<strong>Affiliation:</strong> Universidad Nacional Autónoma de México (UNAM), Open Research Community Accelerator (ORCA)<br />
+<strong>Date:</strong> February 16, 2025</p>
+</div>
+</div>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>An important part of undergraduate education in physiology is
+understanding the musculoskeletal system. This e-book and course is
+designed to teach students about muscle structure and function in an
+interactive way that combines theory and practice. Classes with
+information about muscle anatomy, mechanisms of contraction, and
+generation of electrical activity in muscle cells are accompanied by
+experimental practicals that introduce students to the technique of
+electromyogram (EMG) recording. Through these activities, students learn
+how to record the electrical activity of their muscles using EMG, and
+how EMG can be used to investigate aspects of muscle activation,
+biomechanics, force generation, motor unit recruitment, and muscle
+fatigue. In addition, computational practicals teach students how to
+analyze EMG recordings to quantify different elements of muscle
+activity, introducing and reinforcing important data science skills.</p>
+<p>The chapters in this e-book each cover a different experimental or
+computational practical, complete with complementary theoretical lesson
+plans (including supplementary slide decks), experimental protocols,
+analysis code written in Python, and sample data sets for exploration.
+All materials are publicly available and openly licensed for reuse, both
+herein and at the following links:</p>
+<ul class="simple">
+<li><p><strong>GitHub repository</strong>: <a class="github reference external" href="https://github.com/emckiernan/electrophys">emckiernan/electrophys</a></p></li>
+<li><p><strong>Repo archive via Zenodo</strong>: <span id="id1">[<a class="reference internal" href="#id5" title="Erin C. McKiernan. Emckiernan/electrophys: electrophys v1.0.1. 2021. URL: https://zenodo.org/record/4554420, doi:10.5281/ZENODO.4554420.">McKiernan, 2021</a>]</span></p></li>
+<li><p><strong>Prior published work</strong>: <span id="id2">[<a class="reference internal" href="#id6" title="Erin C. McKiernan and Lucía Medina Gómez. Building capacity through open approaches: lessons from developing undergraduate electrophysiology practicals. F1000Research, 10:187, 3 2021. URL: http://dx.doi.org/10.12688/f1000research.51049.1, doi:10.12688/f1000research.51049.1.">McKiernan and Medina Gómez, 2021</a>]</span></p></li>
+<li><p><strong>Related work</strong>: <span id="id3">[<a class="reference internal" href="#id7" title="Erin McKiernan, Julieta C. Arancio, Eunice Mercado Lara, and Greg Tananbaum. Improving biomedical education in latin america through open science hardware: a case study of one medical school in mexico. 7 2025. URL: http://dx.doi.org/10.31219/osf.io/j7qtp_v1, doi:10.31219/osf.io/j7qtp_v1.">McKiernan <em>et al.</em>, 2025</a>]</span></p></li>
+</ul>
+</section>
+<section id="how-to-use-this-e-book">
+<h2>How to use this e-book<a class="headerlink" href="#how-to-use-this-e-book" title="Link to this heading">#</a></h2>
+<p>This e-book and its contents are designed to be modular in nature such
+that they can be reused and remixed in a variety of ways. The full suite
+of materials can be used sequentially to run a complete stand-alone
+course in muscle physiology and EMG. However, educators could instead
+use only some of the materials to supplement other course activities,
+depending on their needs. For example, an educator teaching a physiology
+course could run just the ‘EMG Basics’ practical (Ch. 1) to reinforce
+concepts seen in their class regarding electrical activity in muscle.
+Or, an educator teaching a data science course could use our sample EMG
+recordings and the ‘EMG Analysis’ practical (Ch. 3) to have their
+students apply analysis techniques to physiologically relevant data
+sets. Open licensing of all the materials also means that the materials
+can be modified as educators see fit. The lesson plans were originally
+designed with a Biomedical Physics curriculum in mind, but can be
+adapted to have more of a biological or physiological focus, depending
+on the intended audience.</p>
+<p>The contents of this book (and sequence of activities if a full course),
+are as follows:</p>
+<p><a class="reference internal" href="chapter-1.html"><span class="std std-doc">Ch. 1: Muscle physiology and EMG
+basics</span></a></p>
+<p><a class="reference internal" href="chapter-2.html"><span class="std std-doc">Ch. 2: Graphing and visually exploring EMG
+data</span></a></p>
+<p><a class="reference external" href="https://curvenote.com/oxa:EPpXta8zJdzN048lz8AR/N4aWmYttZWOcQi2i2rNZ">Ch. 3: Filtering, processing, and analyzing EMG
+data</a></p>
+<p><a class="reference external" href="https://curvenote.com/oxa:EPpXta8zJdzN048lz8AR/oZzZ9YkLDYhuIWC3d5Sk">Ch. 4: Using EMG to measure muscle
+fatigue</a></p>
+<p><a class="reference external" href="https://curvenote.com/oxa:EPpXta8zJdzN048lz8AR/vW8ZGtkrQs3vPifO99sp">Ch. 5: Quantifying muscle fatigue from EMG
+data</a></p>
+<p><a class="reference external" href="https://curvenote.com/oxa:EPpXta8zJdzN048lz8AR/pIDHVE4gOQaQL1y9Os3r">Ch. 6: Dual EMG recordings of muscle
+pairs</a></p>
+<p><a class="reference external" href="https://curvenote.com/oxa:EPpXta8zJdzN048lz8AR/ezirbKT2x8fYE4rCdOgB">Ch. 7: Forearm EMG with
+dynamometry</a></p>
+<p><a class="reference external" href="https://curvenote.com/oxa:EPpXta8zJdzN048lz8AR/Pl7lyGUpTCUyEhT3xELs">Ch. 8: Analyzing forearm EMG and
+dynamometry</a></p>
+<p><a class="reference external" href="https://curvenote.com/oxa:EPpXta8zJdzN048lz8AR/DIygfLcJx0B6YlWQvuBE">Ch. 9: Recording respiration with EMG and
+spirometry</a></p>
+<p><a class="reference external" href="https://curvenote.com/oxa:EPpXta8zJdzN048lz8AR/Fwnarvyq1j9AlkJ1JWeF">Ch. 10: Instrumentation of a simple myoelectric
+prosthetic</a></p>
+</section>
+<section id="educational-specifications">
+<h2>Educational specifications<a class="headerlink" href="#educational-specifications" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Level of study</strong>: Undergraduate</p></li>
+<li><p><strong>Degree programs</strong>: Biology, Biomedical Engineering or Physics,
+Medicine, Physiology, other applied or interdisciplinary programs
+(e.g. Applied Mathematics)</p></li>
+<li><p><strong>Semester or year</strong>: 4th semester, i.e. 2nd-year undergraduate</p></li>
+<li><p><strong>Courses</strong>: Human Physiology, or other related courses</p></li>
+<li><p><strong>Recommended prerequisites</strong>: Molecular &amp; Cellular Biology</p></li>
+</ul>
+</section>
+<section id="licensing">
+<h2>Licensing<a class="headerlink" href="#licensing" title="Link to this heading">#</a></h2>
+<p>This e-book is licensed under the <a class="reference external" href="https://creativecommons.org/licenses/by/4.0/deed.en">Creative Commons Attribution 4.0
+International (CC BY 4.0)
+license</a>. The
+following is a human-readable summary of the license.</p>
+<p>You are free to:<br />
+<strong>Share</strong> — copy and redistribute the material in any medium or format<br />
+<strong>Adapt</strong> — remix, transform, and build upon the material for any
+purpose, even commercially.</p>
+<p>Under the following terms:<br />
+<strong>Attribution</strong> — You must give appropriate credit, provide a link to
+the license, and indicate if changes were made. You may do so in any
+reasonable manner, but not in any way that suggests the licensor
+endorses you or your use.</p>
+<p><strong>Please cite</strong>:<br />
+McKiernan, E.C. &amp; Project abreLA. [Insert chapter name.] In “<em>An
+interactive open-source course in muscle physiology and electromyography
+for undergraduates”</em>. [Insert DOI]. Retrieved [Insert date].</p>
+<p>Any <em>code</em> shared as part of this project is licensed under <a class="reference external" href="https://opensource.org/license/mit">The MIT
+License</a>.</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+“Software”), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.</p>
+<p>Any <em>data</em> (e.g., EMG recordings) shared as part of this project are
+licensed under the <a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/deed.en">Creative Commons CC0 1.0 Universal
+license</a>. The
+following is a human-readable summary of the license.</p>
+<p><em>No Copyright</em>:</p>
+<p>The person who associated a work with this deed has dedicated the work
+to the public domain by waiving all of his or her rights to the work
+worldwide under copyright law, including all related and neighboring
+rights, to the extent allowed by law. You can copy, modify, distribute
+and perform the work, even for commercial purposes, all without asking
+permission.</p>
+</section>
+<section id="funding">
+<h2>Funding<a class="headerlink" href="#funding" title="Link to this heading">#</a></h2>
+<p>This work is a product of Project abreLA, Advancing Biomedical Research
+&amp; Education in Latin America, organized by the <a class="reference external" href="https://www.orcaopen.org/">Open Research Community
+Accelerator (ORCA)</a>. This project has been
+made possible in part by grant 2024-347841 from the Chan Zuckerberg
+Initiative DAF, an advised fund of the Silicon Valley Community
+Foundation, awarded to ORCA. Earlier foundational work was supported by
+UNAM-DGAPA-PAPIME PE213817 and PE213219 awarded to ECM.</p>
+<a class="reference internal image-reference" href="_images/intro-1.png"><img alt="AbreLA and ORCA logos" class="align-center" src="_images/intro-1.png" style="width: 70%;" />
+</a>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h3>
+<div class="docutils container" id="id4">
+<div role="list" class="citation-list">
+<div class="citation" id="id5" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Erin C. McKiernan. Emckiernan/electrophys: electrophys v1.0.1. 2021. URL: <a class="reference external" href="https://zenodo.org/record/4554420">https://zenodo.org/record/4554420</a>, <a class="reference external" href="https://doi.org/10.5281/ZENODO.4554420">doi:10.5281/ZENODO.4554420</a>.</p>
+</div>
+<div class="citation" id="id6" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Erin C. McKiernan and Lucía Medina Gómez. Building capacity through open approaches: lessons from developing undergraduate electrophysiology practicals. <em>F1000Research</em>, 10:187, 3 2021. URL: <a class="reference external" href="http://dx.doi.org/10.12688/f1000research.51049.1">http://dx.doi.org/10.12688/f1000research.51049.1</a>, <a class="reference external" href="https://doi.org/10.12688/f1000research.51049.1">doi:10.12688/f1000research.51049.1</a>.</p>
+</div>
+<div class="citation" id="id7" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Erin McKiernan, Julieta C. Arancio, Eunice Mercado Lara, and Greg Tananbaum. Improving biomedical education in latin america through open science hardware: a case study of one medical school in mexico. 7 2025. URL: <a class="reference external" href="http://dx.doi.org/10.31219/osf.io/j7qtp_v1">http://dx.doi.org/10.31219/osf.io/j7qtp_v1</a>, <a class="reference external" href="https://doi.org/10.31219/osf.io/j7qtp_v1">doi:10.31219/osf.io/j7qtp_v1</a>.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="chapter-1.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Ch. 1: Muscle physiology and EMG basics</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-this-e-book">How to use this e-book</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#educational-specifications">Educational specifications</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#licensing">Licensing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funding">Funding</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Erin McKiernan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div class="copyright-license">
+<br>
+<a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://licensebuttons.net/l/by/4.0/88x31.png"></a>
+    All content on this site (unless otherwise specified) is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 license</a>
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
