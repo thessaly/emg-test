@@ -47,7 +47,7 @@ Include a lesson type indicator:
 ```markdown
 <mark>Lesson Type</mark>
 ```
-Examples: `<mark>Analytical practical</mark>`, `<mark>Theory</mark>`, `<mark>Lab Exercise</mark>`
+Examples: `<mark>Analytical practical</mark>`, `<mark>Experimental practical</mark>`, `<mark>Theory</mark>`
 
 ## Modifying Existing Lessons
 
@@ -80,6 +80,7 @@ Store all images in the `images/` folder, then reference them:
 :align: center
 ```
 </code>
+
 ### Figures (with captions and references)
 
 <code>
@@ -89,7 +90,7 @@ Store all images in the `images/` folder, then reference them:
 :align: center
 Your figure caption goes here with detailed description and attribution.
 ```
-</code>code>
+</code>
 
 **To reference the figure in text:**
 ```markdown
