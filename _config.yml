@@ -28,6 +28,10 @@ repository:
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
+  theme:
+    options:
+      default_mode: light
+      mode_switch_button: true
   use_issues_button: true
   use_repository_button: true
   extra_footer : |
@@ -49,7 +53,7 @@ sphinx:
     bibtex_reference_style: author_year
     bibtex_default_style: unsrt
     html_css_files:
-      - custom.css
+      - custom-enhanced.css
     html_show_copyright: false
 
 parse:
