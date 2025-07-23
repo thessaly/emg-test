@@ -1,4 +1,4 @@
-<mark>Lesson type: Experimental practical</mark>      
+<mark>Experimental practical</mark>      
 
 # Ch. 1: Muscle physiology and EMG basics
 
