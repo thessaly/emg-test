@@ -3,7 +3,7 @@
 
 format: jb-book
 root: intro
-
+title: Open Source course in muscle physiology and EMG
 chapters:
   - file: chapter-1
   - file: chapter-2

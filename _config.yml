@@ -28,6 +28,7 @@ repository:
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
+  home_page_in_navbar: false  # Whether to include your home page in the left Navigation Bar
   theme:
     options:
       default_mode: light
@@ -40,6 +41,10 @@ html:
       <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://licensebuttons.net/l/by/4.0/88x31.png"></a>
           All content on this site (unless otherwise specified) is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 license</a>
       </div>
+  extra_navbar: |
+    <div class="sidebar-home-link">
+      <h4>Open-source course in muscle physiology & EMG</h4>
+    </div>
 
 html_static_path:
   - _static

@@ -255,3 +255,30 @@ html[data-theme="high-contrast"] .prev-next-area {
 .sidebar-toggle.collapsed ~ div.navbar-brand::after {
   margin-left: 10px;
 }
+
+/* Add book title under logo in sidebar, with better wrapping */
+.navbar-brand.logo::after {
+  content: "Open-source course in muscle physiology & EMG";
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--pst-color-text-base);
+  text-align: center;
+  margin-top: 0.5rem;
+  padding: 0 0.5rem;
+  font-family: "PT Serif", serif;
+  white-space: normal;
+  line-height: 1.2;
+  max-width: 12rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-transform: uppercase;
+}
+
+/* Optional: reduce width on smaller screens */
+@media (max-width: 768px) {
+  .navbar-brand.logo::after {
+    font-size: 0.8rem;
+    max-width: 10rem;
+  }
+}
