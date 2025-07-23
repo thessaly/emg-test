@@ -53,7 +53,7 @@ sphinx:
     bibtex_reference_style: author_year
     bibtex_default_style: unsrt
     html_css_files:
-      - custom-enhanced.css
+      - custom.css
     html_show_copyright: false
 
 parse:

@@ -1,8 +1,7 @@
-/* Import Lato for body text and Roboto Mono for code */
+/* Import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto+Mono&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-/* Apply Lato to body */
 /* Body text */
 body {
   font-family: "PT Serif", serif;
@@ -14,95 +13,159 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-.sd-card {
-    margin-top: 2rem;
+/* LIGHT THEME ONLY */
+html[data-theme="light"] {
+  --pst-color-background: #ffffff;
+  --pst-color-text-base: #333;
+  --pst-color-primary: #007ACC;
+}
+html[data-theme="light"] body {
+  background-color: var(--pst-color-background);
+  color: var(--pst-color-text-base);
+}
+html[data-theme="light"] .bd-header-article {
+  background-color: #efefef;
+  border-bottom: 1px solid #ccc;
 }
 
+/* DARK THEME ONLY */
+html[data-theme="dark"] {
+  --pst-color-background: #121212;
+  --pst-color-text-base: #ddd;
+  --pst-color-primary: #92e6e2;
+  --pst-color-border: #444;
+}
+html[data-theme="dark"] body {
+  background-color: var(--pst-color-background);
+  color: var(--pst-color-text-base);
+}
+html[data-theme="dark"] .bd-header-article {
+  background-color: #1e1e1e; /* Dark navbar */
+  border-bottom: 1px solid #444;
+}
+
+/* HIGH CONTRAST THEME */
+html[data-theme="high-contrast"] {
+  --pst-color-background: #000000;
+  --pst-color-text-base: #ffffff;
+  --pst-color-primary: #ffff00; /* Bright yellow for high contrast */
+  --pst-color-link: #00ffff; /* Bright cyan for links */
+  --pst-color-border: #ffffff;
+}
+html[data-theme="high-contrast"] body {
+  background-color: var(--pst-color-background);
+  color: var(--pst-color-text-base);
+}
+html[data-theme="high-contrast"] .bd-header-article {
+  background-color: #000000; /* Pure black navbar */
+  border-bottom: 2px solid #ffffff;
+}
+
+/* Sidebar card spacing */
+.sd-card {
+  margin-top: 2rem;
+}
+
+/* Navbar logo */
 .navbar-brand img {
   max-width: 60%;
 }
 
-bd-links.bd-docs-nav {
+/* Fix selector and sidebar font */
+.bd-links.bd-docs-nav {
   font-size: 0.9em;
   font-family: "PT Serif", serif;
 }
 
+/* Navbar style - base styles */
 .bd-header-article {
-  background-color: #efefef;
-  border-bottom: 1px solid #ccc;
   padding: 0 1rem;
   position: sticky;
   top: 0;
   width: 100%;
-  }
-
 }
 
-.bd-sidebar-primary {
-  border-bottom: 1px solid #ccc;
-
-}
-
+/* Sidebar styles */
+.bd-sidebar-primary,
 .bd-sidebar-secondary {
-  font-family: "PT Serif", serif;
   border-bottom: 1px solid #ccc;
+  font-family: "PT Serif", serif;
 }
 
+/* Dark theme sidebar adjustments */
+html[data-theme="dark"] .bd-sidebar-primary,
+html[data-theme="dark"] .bd-sidebar-secondary {
+  border-bottom: 1px solid #444;
+  background-color: #1a1a1a;
+}
+
+/* High contrast theme sidebar adjustments */
+html[data-theme="high-contrast"] .bd-sidebar-primary,
+html[data-theme="high-contrast"] .bd-sidebar-secondary {
+  border-bottom: 2px solid #ffffff;
+  background-color: #000000;
+}
+
+/* Table of contents */
 .page-toc.tocsection {
   font-weight: 900;
 }
 
 /* Headings */
+h1, h2, h3, h4 {
+  font-family: "PT Serif", serif;
+}
 h1 {
   font-size: 2em;
-  font-family: "PT Serif",serif;
-  margin: 0 0 1rem;
-  margin-top: 1rem;
+  margin: 1rem 0;
 }
-
 h2 {
   font-size: 1.5rem;
-  font-family: "PT Serif",serif;
   margin: 2.75rem 0 1.05rem;
-
 }
-
 h3 {
   font-size: 1.3em;
-  margin-top: 1em;
-  font-family: "PT Serif",serif;
-  margin-bottom: 0.5em;
+  margin: 1em 0 0.5em;
 }
-
 h4 {
   font-size: 1em;
   font-weight: 700;
-  font-family: "PT Serif",serif;
-  margin-top: 1em;
-  margin-bottom: 0.5em;
+  margin: 1em 0 0.5em;
 }
 
+/* Lesson type style text */
 mark {
   font-size: 0.8em;
   font-weight: 400;
-  font-family: "Leto",Sans;
-  margin-top: 1em;
-  margin-bottom: 0.5em;
+  font-family: "Lato", sans-serif;
   text-transform: uppercase;
   background: #a5ddfd;
 }
 
+/* Dark theme mark adjustments */
+html[data-theme="dark"] mark {
+  background: #4a90a4;
+  color: #ffffff;
+}
+
+/* High contrast theme mark adjustments */
+html[data-theme="high-contrast"] mark {
+  background: #ffff00;
+  color: #000000;
+}
+
+/* Bibliography */
 .citation-list {
   font-size: 0.8rem;
 }
-
 .citation-list > p {
   padding-bottom: 0.8em;
 }
 
+/* Card body text */
 .sd-card-text {
   line-height: 1.6;
-  font-family: "PT Sans", serif;
+  font-family: "PT Serif", serif;
 }
 
 /* Code blocks */
@@ -111,22 +174,50 @@ code, pre, .highlight {
   font-size: 0.95em;
 }
 
-/* Sidebar headings */
+/* Dark theme code blocks */
+html[data-theme="dark"] code,
+html[data-theme="dark"] pre,
+html[data-theme="dark"] .highlight {
+  background-color: #2d2d2d;
+  color: #f8f8f2;
+}
+
+/* High contrast theme code blocks */
+html[data-theme="high-contrast"] code,
+html[data-theme="high-contrast"] pre,
+html[data-theme="high-contrast"] .highlight {
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+
+/* Sidebar TOC headings */
 .bd-sidebar h2,
 .bd-sidebar h3 {
   font-weight: 700;
   font-size: 1em;
 }
 
-/* Optional: Adjust TOC */
+/* Site navigation TOC */
 #site-navigation nav {
   font-family: 'Lato', sans-serif;
   font-size: 0.95em;
 }
 
+/* Footer */
 .copyright-license {
-  font-family: "PT Serif",serif;
+  font-family: "PT Serif", serif;
   color: #868686;
+}
+
+/* Dark theme footer */
+html[data-theme="dark"] .copyright-license {
+  color: #aaa;
+}
+
+/* High contrast theme footer */
+html[data-theme="high-contrast"] .copyright-license {
+  color: #ffffff;
 }
 
 .prev-next-info {
@@ -134,23 +225,33 @@ code, pre, .highlight {
   margin: 2em;
 }
 .prev-next-area {
-background: #d3ebf0;
+  background: #d3ebf0;
 }
-.cell_output.docutils.container img {
-  height: 50% !important;
+
+/* Dark theme prev-next area */
+html[data-theme="dark"] .prev-next-area {
+  background: #2a2a2a;
+}
+
+/* High contrast theme prev-next area */
+html[data-theme="high-contrast"] .prev-next-area {
+  background: #000000;
+  border: 1px solid #ffffff;
 }
 
 .prev-next-footer {
   margin-top: 2em;
 }
 
+/* Output image scaling */
+.cell_output.docutils.container img {
+  height: 50% !important;
+}
 
-/* When sidebar is hidden (collapsed) */
+/* Collapsed sidebar toggle behavior */
 .sidebar-toggle:not(.collapsed) ~ div.navbar-brand::after {
   display: inline-block;
 }
-
-/* Optional: Adjust spacing when collapsed */
 .sidebar-toggle.collapsed ~ div.navbar-brand::after {
   margin-left: 10px;
 }
