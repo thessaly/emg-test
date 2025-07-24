@@ -58,3 +58,23 @@ jobs:
         with:
           name: multilingual-jb-html-decorated
           path: _build/html/
+
+  deploy-test:
+    name: Deploy to Netlify
+    runs-on: ubuntu-latest
+    needs: decorate
+    steps:
+      - name: Download decorated HTML
+        uses: actions/download-artifact@v4
+        with:
+          name: multilingual-jb-html-decorated
+          path: ./site
+          
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v3.0
+        with:
+          publish-dir: './site'
+          production-deploy: false  # This makes it a preview/test deploy
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
