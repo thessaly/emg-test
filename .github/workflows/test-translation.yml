@@ -70,6 +70,38 @@ jobs:
           name: multilingual-jb-html-decorated
           path: ./site
           
+      - name: Create root index.html
+        run: |
+          cat > ./site/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <title>EMG Test - Multilingual</title>
+            <meta http-equiv="refresh" content="0; url=./en/">
+            <link rel="canonical" href="./en/">
+          </head>
+          <body>
+            <h1>Redirecting...</h1>
+            <p>If you are not redirected automatically, choose your language:</p>
+            <ul>
+              <li><a href="./en/">English</a></li>
+              <li><a href="./es/">Español</a></li>
+            </ul>
+            <script>
+              window.location.href = './en/';
+            </script>
+          </body>
+          </html>
+          EOF
+          
+      - name: Debug - List files
+        run: |
+          echo "Files in ./site:"
+          find ./site -type f -name "*.html" | head -10
+          echo "Directory structure:"
+          ls -la ./site/
+          
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v3.0
         with:
