@@ -27,7 +27,7 @@ cat > "$css_temp" << 'EOF'
   top: 4px;
   right: 500px;
   z-index: 10000;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 .menu ul {
   list-style: none;
