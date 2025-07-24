@@ -14,30 +14,25 @@ on:
 jobs:
   test-build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-
       - name: Install dependencies
         run: |
           pip install jupyter-book sphinx-intl
-
       - name: Build HTML (English)
         run: sphinx-build -b html -D language=en . _build/html/en
-
       - name: Build HTML (Spanish)
         run: sphinx-build -b html -D language=es . _build/html/es
         
       - name: Archive built site as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: multilingual-jb-html
+          name: multilingual-jb-html-raw
           path: |
             _build/
             
@@ -45,30 +40,21 @@ jobs:
     name: Inject Language Menu
     runs-on: ubuntu-latest
     needs: test-build
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-
-      - name: Set up bash + Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      - name: Install jupyter-book (for consistency)
-        run: pip install jupyter-book sphinx-intl
-
+        
       - name: Download raw HTML artifact
         uses: actions/download-artifact@v4
         with:
-          name: multilingual-jb-html
+          name: multilingual-jb-html-raw
           path: _build/
-
+          
       - name: Run decorate.bash
         run: bash decorate.bash
-
+        
       - name: Upload decorated HTML
         uses: actions/upload-artifact@v4
         with:
-          name: multilingual-jb-html
+          name: multilingual-jb-html-decorated
           path: _build/html/
