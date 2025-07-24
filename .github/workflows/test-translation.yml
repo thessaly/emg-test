@@ -8,7 +8,7 @@ on:
       - '**/decorate.bash'
       - '_config.yml'
       - 'locale/**'
-      - '.github/workflows/test-build.yml'
+      - '.github/workflows/test-translation.yml'
   workflow_dispatch:
 
 jobs:
