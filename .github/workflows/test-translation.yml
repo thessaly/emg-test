@@ -35,7 +35,7 @@ jobs:
         run: sphinx-build -b html -D language=es . _build/html/es
 
       - name: Archive built site as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: multilingual-jb-html
           path: _build/html/
