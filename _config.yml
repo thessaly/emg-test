@@ -41,10 +41,7 @@ html:
       <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://licensebuttons.net/l/by/4.0/88x31.png"></a>
           All content on this site (unless otherwise specified) is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 license</a>
       </div>
-  extra_navbar: |
-    <div class="sidebar-home-link">
-      <h4>Open-source course in muscle physiology & EMG</h4>
-    </div>
+
 
 html_static_path:
   - _static
@@ -60,6 +57,17 @@ sphinx:
     html_css_files:
       - custom.css
     html_show_copyright: false
+    language: en  # defining the source language
+    html_search_language: en  # for search functionality
+    # i18n related settings
+    locale_dirs: ['locale/']  # translation directory
+    gettext_compact: false
+    gettext_additional_targets: ['literal-block']  # translate code blocks
+    gettext_location: false   # removes line numbers from .po files
+
+    # Notebook rendering priority for gettext
+    nb_render_priority:
+      gettext: {}
 
 parse:
   myst:

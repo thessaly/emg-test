@@ -282,3 +282,70 @@ html[data-theme="high-contrast"] .prev-next-area {
     max-width: 10rem;
   }
 }
+
+/*========================================================*/
+/* I18n -- langugae manu settings */
+/*========================================================*/
+
+/*----- Menu Outline -----*/
+/* 所有列表都沒有 bullet point */
+.menu li {
+    list-style:none;
+}
+
+/* 列表文字顯示顏色 (與 Navbar H1 一樣) 與樣式 (懸停時與非懸停時 - 語言選單中列表的字顏色會被再次覆蓋) */
+.menu li:hover > a, .menu .current-item > a {
+    text-decoration:none;
+    color:#f2f2f2;
+}
+
+/* 向下箭頭的外觀 */
+.menu .arrow {
+    font-size:1em;
+}
+
+/*----- Top Level -----*/
+/* 主語言列表的外觀 */
+.menu > ul > li > a {
+    padding:0em 2em 1em 0em;
+    display:inline-block;
+}
+
+/* 主語言區塊的外觀 */
+.langcenter {
+    text-align: center;
+    background-color: #059B7D;
+}
+
+/*----- Bottom Level -----*/
+/* 在主語言懸停時出現語言選單 */
+.menu li:hover .sub-menu {
+    z-index: 1;
+    opacity: 1;    /* for transition */
+}
+
+/* 語言選單的外觀 */
+.sub-menu {
+    width:80%;
+    padding:0.2em 0em;
+    position: absolute;
+    top:80%;
+    z-index:-1;
+    opacity: 0;    /* for transition */
+    transition: opacity linear 0.2s;
+    box-shadow:0px 2px 3px rgba(0,0,0,0.2);
+    background:#4e4040; /* 比 493b3b 稍淺的灰巧克力色 */
+}
+
+/* 語言選單中列表的外觀 (顏色 75% 白) */
+.sub-menu li a {
+    padding:0.5em;
+    display:block;
+    color: #bfbfbf;
+}
+
+/* 語言選單中列表懸停時 (暫時取消背景變淺 #404040 的設定) */
+.sub-menu li a:hover, .sub-menu .current-item a {
+/*     background:#404040; */
+    color: #66b3ff;
+}
