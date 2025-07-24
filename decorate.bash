@@ -24,9 +24,9 @@ cat > "$css_temp" << 'EOF'
 <style>
 .langcenter {
   position: fixed;
-  top: 10px;
-  right: 20px;
-  z-index: 1000;
+  top: 4px;
+  right: 500px;
+  z-index: 10000;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 .menu ul {
