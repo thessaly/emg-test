@@ -24,18 +24,24 @@ jobs:
       - name: Install dependencies
         run: |
           pip install jupyter-book sphinx-intl
+
+      - name: Compile translations
+        run: |
+          echo "Compiling .po files to .mo files..."
+          sphinx-intl build
+
       - name: Build HTML (English)
         run: sphinx-build -b html -D language=en . _build/html/en
       - name: Build HTML (Spanish)
         run: sphinx-build -b html -D language=es . _build/html/es
-        
+
       - name: Archive built site as artifact
         uses: actions/upload-artifact@v4
         with:
           name: multilingual-jb-html-raw
           path: |
             _build/
-            
+
   decorate:
     name: Inject Language Menu
     runs-on: ubuntu-latest
@@ -43,16 +49,16 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-        
+
       - name: Download raw HTML artifact
         uses: actions/download-artifact@v4
         with:
           name: multilingual-jb-html-raw
           path: _build/
-          
+
       - name: Run decorate.bash
         run: bash decorate.bash
-        
+
       - name: Upload decorated HTML
         uses: actions/upload-artifact@v4
         with:
@@ -69,7 +75,7 @@ jobs:
         with:
           name: multilingual-jb-html-decorated
           path: ./site
-          
+
       - name: Create root index.html
         run: |
           cat > ./site/index.html << 'EOF'
@@ -94,14 +100,14 @@ jobs:
           </body>
           </html>
           EOF
-          
+
       - name: Debug - List files
         run: |
           echo "Files in ./site:"
           find ./site -type f -name "*.html" | head -10
           echo "Directory structure:"
           ls -la ./site/
-          
+
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v3.0
         with:
