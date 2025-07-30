@@ -1,0 +1,33 @@
+[build]
+  # Disable Netlify's build - we use GitHub Actions
+  command = ""
+  publish = ""
+  ignore = "exit 0"
+
+[build.processing]
+  # Disable all Netlify processing
+  skip_processing = true
+
+[build.processing.css]
+  bundle = false
+  minify = false
+
+[build.processing.js]
+  bundle = false
+  minify = false
+
+[build.processing.html]
+  pretty_urls = false
+
+[build.processing.images]
+  compress = false
+
+# For branch deploys (previews)
+[context.branch-deploy]
+  command = ""
+  publish = ""
+
+# For pull request deploys
+[context.deploy-preview]
+  command = ""
+  publish = ""

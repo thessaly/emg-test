@@ -1,0 +1,331 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023
+# This file is distributed under the same license as the Project name not
+# set package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Project name not set \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-24 10:00+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: es\n"
+"Language-Team: es <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+msgid "Jupyter Book User Guide"
+msgstr "Guía del usuario de Jupyter Book"
+
+msgid ""
+"This guide will help you create, modify, and work with lessons in this "
+"Jupyter Book project."
+msgstr ""
+"Esta guía le ayudará a crear, modificar y trabajar con las lecciones en este "
+"proyecto de Jupyter Book."
+
+msgid "Overview"
+msgstr "Descripción general"
+
+msgid ""
+"This Jupyter Book automatically builds and publishes when you make "
+"changes to the source files. The book supports both Markdown (`.md`) and "
+"Jupyter Notebook (`.ipynb`) formats for lessons."
+msgstr ""
+"Este Jupyter Book se compila y publica automáticamente cuando realiza cambios "
+"en los archivos fuente. El libro admite tanto Markdown (`.md`) como Jupyter "
+"Notebook (`.ipynb`) para las lecciones."
+
+msgid "Getting Started"
+msgstr "Primeros pasos"
+
+msgid "Repository Structure"
+msgstr "Estructura del repositorio"
+
+msgid ""
+"your-repo/\n"
+"├── images/           # All images for the book\n"
+"├── _config.yml       # Book configuration\n"
+"├── _toc.yml         # Table of contents\n"
+"├── *.md             # Markdown lesson files\n"
+"├── *.ipynb          # Jupyter notebook lesson files\n"
+"└── bibliography.bib # Citation references\n"
+msgstr ""
+"your-repo/\n"
+"├── images/           # Todas las imágenes del libro\n"
+"├── _config.yml       # Configuración del libro\n"
+"├── _toc.yml         # Tabla de contenidos\n"
+"├── *.md             # Archivos de lecciones en Markdown\n"
+"├── *.ipynb          # Archivos de lecciones en Jupyter Notebook\n"
+"└── bibliography.bib # Referencias bibliográficas\n"
+
+msgid "Creating New Lessons"
+msgstr "Creación de nuevas lecciones"
+
+msgid "Step 1: Choose Your Format"
+msgstr "Paso 1: Elija su formato"
+
+msgid ""
+"**Markdown files (`.md`)**: Best for text-heavy lessons with static "
+"content"
+msgstr "**Archivos Markdown (`.md`):** Ideales para lecciones con mucho texto y contenido estático"
+
+msgid ""
+"**Jupyter Notebooks (`.ipynb`)**: Best for interactive lessons with code "
+"examples"
+msgstr "**Jupyter Notebooks (`.ipynb`):** Ideales para lecciones interactivas con ejemplos de código"
+
+msgid "Step 2: Create the Lesson File"
+msgstr "Paso 2: Cree el archivo de la lección"
+
+msgid "Create a new file in the root directory"
+msgstr "Cree un archivo nuevo en el directorio raíz"
+
+msgid ""
+"Name it descriptively (e.g., `chapter-01-levers.md` or "
+"`lab-02-forces.ipynb`)"
+msgstr "Asígnelo un nombre descriptivo (por ejemplo, `chapter-01-levers.md` o `lab-02-forces.ipynb`)"
+
+msgid "Add it to the `_toc.yml` file in the appropriate location"
+msgstr "Añádalo al archivo `_toc.yml` en la ubicación correspondiente"
+
+msgid "Step 3: Add Required Chapter Information"
+msgstr "Paso 3: Agregue la información requerida del capítulo"
+
+msgid "Every lesson must start with author information:"
+msgstr "Cada lección debe comenzar con la información del autor:"
+
+msgid "Step 4: Add Lesson Type Tag"
+msgstr "Paso 4: Agregue la etiqueta de tipo de lección"
+
+msgid "Include a lesson type indicator:"
+msgstr "Incluya un indicador de tipo de lección:"
+
+msgid "<mark>Lesson Type</mark>\n"
+msgstr "<mark>Tipo de lección</mark>\n"
+
+msgid ""
+"Examples: `<mark>Analytical practical</mark>`, `<mark>Theory</mark>`, "
+"`<mark>Lab Exercise</mark>`"
+msgstr "Ejemplos: `<mark>Práctica analítica</mark>`, `<mark>Teoría</mark>`, `<mark>Ejercicio de laboratorio</mark>`"
+
+msgid "Modifying Existing Lessons"
+msgstr "Modificación de lecciones existentes"
+
+msgid ""
+"**Find the lesson file**: Look for `.md` or `.ipynb` files in the root "
+"directory"
+msgstr "**Encuentre el archivo de la lección**: Busque archivos `.md` o `.ipynb` en el directorio raíz"
+
+msgid ""
+"**Edit the content**: Make your changes using the formatting guidelines "
+"below"
+msgstr "**Edite el contenido**: Haga sus cambios siguiendo las pautas de formato a continuación"
+
+msgid "**Save and push**: The book will automatically rebuild via GitHub Actions"
+msgstr "**Guarde y envíe**: El libro se volverá a compilar automáticamente a través de GitHub Actions"
+
+msgid "Content Formatting Guide"
+msgstr "Guía de formato de contenido"
+
+msgid "Citations"
+msgstr "Citas"
+
+msgid "**Single citation:**"
+msgstr "**Cita única:**"
+
+#, python-brace-format
+msgid "{cite}`McKiernan_Zenodo_2021`\n"
+msgstr "{cite}`McKiernan_Zenodo_2021`\n"
+
+msgid "**Multiple citations:**"
+msgstr "**Múltiples citas:**"
+
+#, python-brace-format
+msgid "{cite:p}`leversOLI, guyton2016book, openStax_lever`\n"
+msgstr "{cite:p}`leversOLI, guyton2016book, openStax_lever`\n"
+
+msgid "Images"
+msgstr "Imágenes"
+
+msgid "Store all images in the `images/` folder, then reference them:"
+msgstr "Almacene todas las imágenes en la carpeta `images/`, luego refiéralas:"
+
+msgid "**To reference the figure in text:**"
+msgstr "**Para referenciar la figura en el texto:**"
+
+#, python-brace-format
+msgid "{numref}`figure-reference-name`\n"
+msgstr "{numref}`figure-reference-name`\n"
+
+msgid "Chapter Bibliography"
+msgstr "Bibliografía del capítulo"
+
+msgid ""
+"Add this at the end of each chapter to generate a bibliography of cited "
+"works:"
+msgstr "Agregue esto al final de cada capítulo para generar una bibliografía de las obras citadas:"
+
+msgid "Working with Interactive Notebooks"
+msgstr "Trabajo con notebooks interactivos"
+
+msgid "When you create a `.ipynb` file:"
+msgstr "Cuando cree un archivo `.ipynb`:"
+
+msgid "The launch button will automatically appear in the navbar"
+msgstr "El botón de lanzamiento aparecerá automáticamente en la barra de navegación"
+
+msgid "Readers can click it to open the notebook in Google Colab"
+msgstr "Los lectores pueden hacer clic en él para abrir el notebook en Google Colab"
+
+msgid "Make sure your notebook runs completely before committing"
+msgstr "Asegúrese de que su notebook se ejecute completamente antes de confirmar cambios"
+
+msgid "Adding Citations"
+msgstr "Añadiendo citas"
+
+msgid "Add new references to the `bibliography.bib` file in BibTeX format"
+msgstr "Agregue nuevas referencias al archivo `bibliography.bib` en formato BibTeX"
+
+msgid "Use the citation key in your lesson files"
+msgstr "Use la clave de citación en sus archivos de lección"
+
+msgid "The bibliography will automatically generate"
+msgstr "La bibliografía se generará automáticamente"
+
+msgid "Example BibTeX entry:"
+msgstr "Ejemplo de entrada BibTeX:"
+
+msgid ""
+"@article{author2024,\n"
+"    title={Article Title},\n"
+"    author={Author Name},\n"
+"    journal={Journal Name},\n"
+"    year={2024},\n"
+"    volume={1},\n"
+"    pages={1-10}\n"
+"}\n"
+msgstr ""
+"@article{author2024,\n"
+"    title={Article Title},\n"
+"    author={Author Name},\n"
+"    journal={Journal Name},\n"
+"    year={2024},\n"
+"    volume={1},\n"
+"    pages={1-10}\n"
+"}\n"
+
+msgid "Publishing Process"
+msgstr "Proceso de publicación"
+
+msgid "The book uses **GitHub Actions** for automatic publishing:"
+msgstr "El libro utiliza **GitHub Actions** para la publicación automática:"
+
+msgid "**Make changes** to any `.md` or `.ipynb` file"
+msgstr "**Realice cambios** en cualquier archivo `.md` o `.ipynb`"
+
+msgid "**Commit and push** to the repository"
+msgstr "**Confirme y envíe** al repositorio"
+
+msgid "**GitHub Actions automatically builds** the book"
+msgstr "**GitHub Actions compila automáticamente** el libro"
+
+msgid "**Changes appear live** on the published site"
+msgstr "**Los cambios aparecen** en directo en el sitio publicado"
+
+msgid "What triggers a rebuild:"
+msgstr "Qué desencadena una reconstrucción:"
+
+msgid "Changes to lesson files (`.md`, `.ipynb`)"
+msgstr "Cambios en los archivos de lecciones (`.md`, `.ipynb`)"
+
+msgid "Changes to configuration files (`_config.yml`, `_toc.yml`)"
+msgstr "Cambios en los archivos de configuración (`_config.yml`, `_toc.yml`)"
+
+msgid "Changes to the bibliography file"
+msgstr "Cambios en el archivo de bibliografía"
+
+msgid "New images added to the `images/` folder"
+msgstr "Nuevas imágenes agregadas a la carpeta `images/`"
+
+msgid "Troubleshooting"
+msgstr "Solución de problemas"
+
+msgid "Common Issues:"
+msgstr "Problemas comunes:"
+
+msgid "**Build fails:**"
+msgstr "**Error de compilación:**"
+
+msgid "Check syntax in your markdown/notebook files"
+msgstr "Verifique la sintaxis en sus archivos markdown/notebook"
+
+msgid "Ensure all referenced images exist in the `images/` folder"
+msgstr "Asegúrese de que todas las imágenes referenciadas existan en la carpeta `images/`"
+
+msgid "Verify citation keys exist in `bibliography.bib`"
+msgstr "Verifique que las claves de citación existan en `bibliography.bib`"
+
+msgid "**Images not showing:**"
+msgstr "**Imágenes no se muestran:**"
+
+msgid "Check file path (should be `images/filename.png`)"
+msgstr "Verifique la ruta del archivo (debe ser `images/filename.png`)"
+
+msgid "Ensure image file exists and is committed to the repository"
+msgstr "Asegúrese de que el archivo de imagen exista y esté comprometido en el repositorio"
+
+msgid "Verify image file extension matches the reference"
+msgstr "Verifique que la extensión del archivo coincida con la referencia"
+
+msgid "**Citations not working:**"
+msgstr "**Las citas no funcionan:**"
+
+msgid "Check that the citation key exists in `bibliography.bib`"
+msgstr "Compruebe que la clave de citación exista en `bibliography.bib`"
+
+#, python-brace-format
+msgid "Ensure proper citation syntax: `{cite}` for basic, `{cite:p}` for multiple"
+msgstr "Asegúrese de usar la sintaxis correcta de citación: `{cite}` para básica, `{cite:p}` para múltiples"
+
+msgid "**Interactive features not working:**"
+msgstr "**Funciones interactivas no funcionan:**"
+
+msgid "For notebooks, ensure the `.ipynb` file is properly formatted"
+msgstr "Para notebooks, asegúrese de que el archivo `.ipynb` esté correctamente formateado"
+
+msgid "Check that code cells run without errors"
+msgstr "Verifique que las celdas de código se ejecuten sin errores"
+
+msgid "Quick Checklist for New Lessons"
+msgstr "Lista de verificación rápida para nuevas lecciones"
+
+msgid "File created with appropriate extension (`.md` or `.ipynb`)"
+msgstr "Archivo creado con la extensión adecuada (`.md` o `.ipynb`)"
+
+msgid "Added to `_toc.yml`"
+msgstr "Agregado en `_toc.yml`"
+
+msgid "Includes author card at the beginning"
+msgstr "Incluye la tarjeta del autor al principio"
+
+msgid "Includes lesson type tag"
+msgstr "Incluye la etiqueta de tipo de lección"
+
+msgid "All images stored in `images/` folder"
+msgstr "Todas las imágenes almacenadas en la carpeta `images/`"
+
+msgid "Citations properly formatted and exist in bibliography"
+msgstr "Citas correctamente formateadas y existentes en la bibliografía"
+
+msgid "Content follows formatting guidelines"
+msgstr "El contenido sigue las pautas de formato"
+
+msgid "File saved and pushed to repository"
+msgstr "Archivo guardado y enviado al repositorio"
