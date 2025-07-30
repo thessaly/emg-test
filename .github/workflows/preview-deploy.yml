@@ -119,13 +119,24 @@ jobs:
           echo "Directory structure:"
           ls -la ./site/
 
+      - name: Prepare for Netlify deployment
+        run: |
+          # Disable Jekyll processing
+          touch ./site/.nojekyll
+          # Add basic redirects file
+          echo "/* /index.html 200" > ./site/_redirects
+
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v3.0
         with:
           publish-dir: './site'
-          production-deploy: false  # Always preview/test deploy
+          production-deploy: false
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: "Preview deploy from ${{ github.event.head_commit.message }}"
+          deploy-message: "Preview deploy from ${{ github.ref_name }}"
+          alias: preview-${{ github.run_number }}
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
