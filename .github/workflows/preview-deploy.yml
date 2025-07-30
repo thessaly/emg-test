@@ -131,12 +131,11 @@ jobs:
         with:
           publish-dir: './site'
           production-deploy: false
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Preview deploy from ${{ github.ref_name }}"
           alias: preview-${{ github.run_number }}
-          enable-pull-request-comment: true
-          enable-commit-comment: true
-          overwrites-pull-request-comment: true
+          enable-pull-request-comment: false
+          enable-commit-comment: false
+          enable-commit-status: false
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
