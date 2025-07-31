@@ -22,11 +22,205 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-multilingual:
+  detect-new-files:
     runs-on: ubuntu-latest
+    outputs:
+      new-files: ${{ steps.detect.outputs.new-files }}
+      has-new-files: ${{ steps.detect.outputs.has-new-files }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Get current and previous commit
+
+      - name: Detect new .md and .ipynb files
+        id: detect
+        run: |
+          echo "Detecting new markdown and notebook files..."
+
+          # Get list of new .md and .ipynb files in this push
+          NEW_FILES=$(git diff --name-status HEAD~1 HEAD | grep -E '^A.*\.(md|ipynb)$' | cut -f2 || echo "")
+
+          if [ -z "$NEW_FILES" ]; then
+            echo "No new .md or .ipynb files detected"
+            echo "has-new-files=false" >> $GITHUB_OUTPUT
+            echo "new-files=" >> $GITHUB_OUTPUT
+          else
+            echo "New files detected:"
+            echo "$NEW_FILES"
+            # Convert to space-separated list for easier processing
+            echo "has-new-files=true" >> $GITHUB_OUTPUT
+            echo "new-files<<EOF" >> $GITHUB_OUTPUT
+            echo "$NEW_FILES" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
+  generate-translations:
+    runs-on: ubuntu-latest
+    needs: detect-new-files
+    if: needs.detect-new-files.outputs.has-new-files == 'true'
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install sphinx-intl deep-translator polib
+
+      - name: Generate translations for new files
+        run: |
+          echo "Processing new files for translation..."
+
+          # Create Python script for translation
+          cat > translate_new_files.py << 'EOF'
+          import os
+          import sys
+          import subprocess
+          import polib
+          from deep_translator import GoogleTranslator
+          from pathlib import Path
+
+          def generate_pot_for_file(filepath):
+              """Generate .pot file for a single content file"""
+              print(f"Generating .pot for: {filepath}")
+
+              # Create temp directory
+              os.makedirs("_build/gettext_temp", exist_ok=True)
+
+              # Use sphinx-build to extract strings from single file
+              cmd = [
+                  "sphinx-build", "-b", "gettext",
+                  "-D", "master_doc=index",
+                  "-D", f"exclude_patterns=['**/*']",  # Exclude all...
+                  ".", "_build/gettext_temp"
+              ]
+
+              # Alternative: use jupyter-book directly for single file
+              if filepath.endswith('.ipynb'):
+                  # Convert notebook to temp markdown for extraction
+                  temp_md = f"_temp_{os.path.basename(filepath)}.md"
+                  subprocess.run(["jupyter", "nbconvert", "--to", "markdown",
+                                filepath, "--output", temp_md], check=True)
+                  source_file = temp_md
+              else:
+                  source_file = filepath
+
+              # Extract translatable strings using sphinx-intl
+              subprocess.run(["sphinx-build", "-b", "gettext",
+                            "-D", f"gettext_compact=False",
+                            ".", "_build/gettext_temp"],
+                           capture_output=True)
+
+              # Find the generated .pot file
+              pot_name = os.path.splitext(os.path.basename(filepath))[0] + ".pot"
+              pot_path = os.path.join("_build/gettext_temp", pot_name)
+
+              return pot_path if os.path.exists(pot_path) else None
+
+          def create_translated_po(pot_path, target_lang="es"):
+              """Create auto-translated .po file from .pot"""
+              if not os.path.exists(pot_path):
+                  return None
+
+              pot = polib.pofile(pot_path)
+              translator = GoogleTranslator(source='en', target=target_lang)
+
+              # Create output directory
+              po_dir = f"locale/{target_lang}/LC_MESSAGES"
+              os.makedirs(po_dir, exist_ok=True)
+
+              # Create .po file path
+              po_name = os.path.basename(pot_path).replace('.pot', '.po')
+              po_path = os.path.join(po_dir, po_name)
+
+              # Skip if .po already exists (don't overwrite existing translations)
+              if os.path.exists(po_path):
+                  print(f"Skipping {po_path} - already exists")
+                  return po_path
+
+              print(f"Creating auto-translated .po: {po_path}")
+
+              # Translate each entry
+              for entry in pot:
+                  if entry.msgid and entry.msgid.strip():
+                      try:
+                          # Skip very short strings and technical terms
+                          if len(entry.msgid.strip()) < 3:
+                              continue
+
+                          translated = translator.translate(entry.msgid)
+                          entry.msgstr = translated
+
+                          # Add translator note
+                          entry.tcomment = "Auto-translated - please review"
+
+                      except Exception as e:
+                          print(f"Translation failed for '{entry.msgid[:30]}...': {e}")
+                          # Leave msgstr empty if translation fails
+
+              # Save the .po file
+              pot.save_as_pofile(po_path)
+              return po_path
+
+          # Process each new file
+          new_files = """${{ needs.detect-new-files.outputs.new-files }}"""
+
+          for filepath in new_files.strip().split('\n'):
+              if filepath.strip():
+                  print(f"\n=== Processing {filepath} ===")
+
+                  # Generate .pot for this file
+                  pot_path = generate_pot_for_file(filepath.strip())
+
+                  if pot_path:
+                      # Create auto-translated .po
+                      po_path = create_translated_po(pot_path)
+                      if po_path:
+                          print(f"✓ Created: {po_path}")
+                  else:
+                      print(f"✗ No .pot generated for {filepath}")
+          EOF
+
+          # Run the translation script
+          python translate_new_files.py
+
+      - name: Commit new translation files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          # Check if there are new .po files to commit
+          if [ -n "$(git status --porcelain locale/)" ]; then
+            git add locale/
+            git commit -m "Add auto-generated translations for new files
+
+            Files processed:
+            ${{ needs.detect-new-files.outputs.new-files }}
+
+            [skip ci]"
+            git push
+            echo "✓ Committed new translation files"
+          else
+            echo "No new translation files to commit"
+          fi
+
+  build-multilingual:
+    runs-on: ubuntu-latest
+    needs: [detect-new-files, generate-translations]
+    if: always() && (needs.detect-new-files.result == 'success')
+    steps:
+      - name: Checkout repo (with latest translations)
+        uses: actions/checkout@v4
+        with:
+          ref: main  # Get the latest version with new translations
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -82,7 +276,7 @@ jobs:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     needs: decorate
-    
+
     permissions:
       pages: write
       id-token: write
@@ -131,7 +325,7 @@ jobs:
           ls -la ./site/
 
       - name: Upload to GitHub Pages
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           path: "./site"
 
