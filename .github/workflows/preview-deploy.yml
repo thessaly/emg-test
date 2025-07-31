@@ -14,17 +14,351 @@ on:
       - '**/*.md'
       - '**/*.ipynb'
       - 'requirements.txt'
+      - '_toc.yml'
   pull_request:
     branches:
       - main
   workflow_dispatch:
 
 jobs:
-  build-preview:
+  detect-new-files:
     runs-on: ubuntu-latest
+    outputs:
+      new-files: ${{ steps.detect.outputs.new-files }}
+      has-new-files: ${{ steps.detect.outputs.has-new-files }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for better diff detection
+
+      - name: Detect new .md and .ipynb files
+        id: detect
+        run: |
+          echo "Detecting new markdown and notebook files..."
+
+          # For feature branches, compare with main branch
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            # On main, compare with previous commit
+            BASE_REF="HEAD~1"
+          else
+            # On feature branches, compare with main
+            BASE_REF="origin/main"
+          fi
+
+          echo "Comparing ${{ github.ref_name }} with $BASE_REF"
+
+          # Get list of new .md and .ipynb files
+          NEW_FILES=$(git diff --name-status $BASE_REF HEAD | grep -E '^A.*\.(md|ipynb)
+
+  decorate:
+    name: Inject Language Menu
+    runs-on: ubuntu-latest
+    needs: build-preview
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download raw HTML artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: multilingual-preview-raw
+          path: _build/
+
+      - name: Run decorate.bash
+        run: bash decorate.bash
+
+      - name: Upload decorated HTML
+        uses: actions/upload-artifact@v4
+        with:
+          name: multilingual-preview-decorated
+          path: _build/html/
+
+  deploy-netlify:
+    name: Deploy Preview to Netlify
+    runs-on: ubuntu-latest
+    needs: decorate
+    steps:
+      - name: Download decorated HTML
+        uses: actions/download-artifact@v4
+        with:
+          name: multilingual-preview-decorated
+          path: ./site
+
+      - name: Create root index.html
+        run: |
+          cat > ./site/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <title>EMG Preview - Multilingual</title>
+            <meta http-equiv="refresh" content="0; url=./en/">
+            <link rel="canonical" href="./en/">
+          </head>
+          <body>
+            <h1>Redirecting...</h1>
+            <p>If you are not redirected automatically, choose your language:</p>
+            <ul>
+              <li><a href="./en/">English</a></li>
+              <li><a href="./es/">Español</a></li>
+            </ul>
+            <script>
+              window.location.href = './en/';
+            </script>
+          </body>
+          </html>
+          EOF
+
+      - name: Debug - List files
+        run: |
+          echo "Files in ./site:"
+          find ./site -type f -name "*.html" | head -10
+          echo "Directory structure:"
+          ls -la ./site/
+
+      - name: Prepare for Netlify deployment
+        run: |
+          # Disable Jekyll processing
+          touch ./site/.nojekyll
+          # Add basic redirects file
+          echo "/* /index.html 200" > ./site/_redirects
+
+      - name: Deploy to Netlify
+        id: netlify-deploy
+        uses: nwtgck/actions-netlify@v3.0
+        with:
+          publish-dir: './site'
+          production-deploy: false
+          deploy-message: "Preview deploy from ${{ github.ref_name }}"
+          alias: preview-${{ github.run_number }}
+          enable-pull-request-comment: false
+          enable-commit-comment: false
+          enable-commit-status: false
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      - name: Preview URL
+        run: |
+          echo "🚀 Preview deployed successfully!"
+          echo "Preview URL: ${{ steps.netlify-deploy.outputs.deploy-url }}"
+          echo "## 🚀 Preview Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "Preview URL: ${{ steps.netlify-deploy.outputs.deploy-url }}" >> $GITHUB_STEP_SUMMARY | cut -f2 || echo "")
+
+          if [ -z "$NEW_FILES" ]; then
+            echo "No new .md or .ipynb files detected"
+            echo "has-new-files=false" >> $GITHUB_OUTPUT
+            echo "new-files=" >> $GITHUB_OUTPUT
+          else
+            echo "New files detected:"
+            echo "$NEW_FILES"
+            echo "has-new-files=true" >> $GITHUB_OUTPUT
+            echo "new-files<<EOF" >> $GITHUB_OUTPUT
+            echo "$NEW_FILES" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
+  generate-translations:
+    runs-on: ubuntu-latest
+    needs: detect-new-files
+    if: needs.detect-new-files.outputs.has-new-files == 'true'
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install sphinx-intl deep-translator polib
+
+      - name: Generate translations for new files
+        run: |
+          echo "Processing new files for translation..."
+
+          # Create Python script for translation
+          cat > translate_new_files.py << 'EOF'
+          import os
+          import sys
+          import subprocess
+          import polib
+          from deep_translator import GoogleTranslator
+          from pathlib import Path
+          import time
+
+          def extract_strings_from_file(filepath):
+              """Extract translatable strings from a single file"""
+              print(f"Extracting strings from: {filepath}")
+
+              # Create temporary directory
+              temp_dir = "_build/temp_extraction"
+              os.makedirs(temp_dir, exist_ok=True)
+
+              try:
+                  # For Jupyter notebooks, convert to markdown first
+                  if filepath.endswith('.ipynb'):
+                      temp_md = os.path.join(temp_dir, f"temp_{os.path.basename(filepath)}.md")
+                      result = subprocess.run([
+                          "jupyter", "nbconvert", "--to", "markdown",
+                          filepath, "--output", temp_md
+                      ], capture_output=True, text=True)
+                      if result.returncode != 0:
+                          print(f"Failed to convert notebook: {result.stderr}")
+                          return None
+                      source_file = temp_md
+                  else:
+                      source_file = filepath
+
+                  # Use sphinx-build to extract strings
+                  pot_dir = os.path.join(temp_dir, "pot")
+                  os.makedirs(pot_dir, exist_ok=True)
+
+                  # Create minimal conf.py for extraction
+                  conf_content = '''
+          extensions = ['myst_parser', 'jupyter_book']
+          source_suffix = {'.rst': None, '.md': None}
+          master_doc = 'index'
+          '''
+                  with open(os.path.join(temp_dir, "conf.py"), "w") as f:
+                      f.write(conf_content)
+
+                  # Create temporary index.rst that includes our file
+                  basename = os.path.splitext(os.path.basename(source_file))[0]
+                  index_content = f'''
+          Temporary Index
+          ==============
+
+          .. include:: ../{source_file}
+          '''
+                  with open(os.path.join(temp_dir, "index.rst"), "w") as f:
+                      f.write(index_content)
+
+                  # Extract translatable strings
+                  result = subprocess.run([
+                      "sphinx-build", "-b", "gettext",
+                      "-c", temp_dir,
+                      temp_dir, pot_dir
+                  ], capture_output=True, text=True, cwd=".")
+
+                  # Find generated .pot file
+                  pot_files = list(Path(pot_dir).glob("*.pot"))
+                  if pot_files:
+                      return str(pot_files[0])
+                  else:
+                      print(f"No .pot file generated for {filepath}")
+                      return None
+
+              except Exception as e:
+                  print(f"Error extracting from {filepath}: {e}")
+                  return None
+
+          def create_translated_po(pot_path, original_file, target_lang="es"):
+              """Create auto-translated .po file from .pot"""
+              if not pot_path or not os.path.exists(pot_path):
+                  return None
+
+              try:
+                  pot = polib.pofile(pot_path)
+                  translator = GoogleTranslator(source='en', target=target_lang)
+
+                  # Create output directory
+                  po_dir = f"locale/{target_lang}/LC_MESSAGES"
+                  os.makedirs(po_dir, exist_ok=True)
+
+                  # Create .po file path based on original file name
+                  original_basename = os.path.splitext(os.path.basename(original_file))[0]
+                  po_path = os.path.join(po_dir, f"{original_basename}.po")
+
+                  # Skip if .po already exists
+                  if os.path.exists(po_path):
+                      print(f"Skipping {po_path} - already exists")
+                      return po_path
+
+                  print(f"Creating auto-translated .po: {po_path}")
+
+                  # Translate each entry
+                  translated_count = 0
+                  for entry in pot:
+                      if entry.msgid and entry.msgid.strip() and len(entry.msgid.strip()) > 2:
+                          try:
+                              # Add small delay to avoid rate limiting
+                              if translated_count > 0 and translated_count % 10 == 0:
+                                  time.sleep(1)
+
+                              translated = translator.translate(entry.msgid)
+                              if translated and translated != entry.msgid:
+                                  entry.msgstr = translated
+                                  entry.tcomment = "Auto-translated - please review"
+                                  translated_count += 1
+
+                          except Exception as e:
+                              print(f"Translation failed for '{entry.msgid[:30]}...': {e}")
+                              # Leave msgstr empty if translation fails
+
+                  # Save the .po file
+                  pot.save_as_pofile(po_path)
+                  print(f"✓ Created {po_path} with {translated_count} translations")
+                  return po_path
+
+              except Exception as e:
+                  print(f"Error creating .po file: {e}")
+                  return None
+
+          # Process each new file
+          new_files = """${{ needs.detect-new-files.outputs.new-files }}"""
+
+          success_count = 0
+          for filepath in new_files.strip().split('\n'):
+              if filepath.strip():
+                  filepath = filepath.strip()
+                  print(f"\n=== Processing {filepath} ===")
+
+                  # Extract strings from this file
+                  pot_path = extract_strings_from_file(filepath)
+
+                  if pot_path:
+                      # Create auto-translated .po
+                      po_path = create_translated_po(pot_path, filepath)
+                      if po_path:
+                          success_count += 1
+                          print(f"✓ Successfully processed: {filepath}")
+                  else:
+                      print(f"✗ Failed to process: {filepath}")
+
+          print(f"\n=== Summary ===")
+          print(f"Successfully processed {success_count} files")
+          EOF
+
+          # Run the translation script
+          python translate_new_files.py
+
+      - name: Upload translation artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: new-translations-preview
+          path: |
+            locale/es/LC_MESSAGES/*.po
+
+  build-preview:
+    runs-on: ubuntu-latest
+    needs: [detect-new-files, generate-translations]
+    if: always() && (needs.detect-new-files.result == 'success')
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download translation artifacts (if any)
+        if: needs.detect-new-files.outputs.has-new-files == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: new-translations-preview
+          path: .
+        continue-on-error: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -127,6 +461,7 @@ jobs:
           echo "/* /index.html 200" > ./site/_redirects
 
       - name: Deploy to Netlify
+        id: netlify-deploy
         uses: nwtgck/actions-netlify@v3.0
         with:
           publish-dir: './site'
@@ -139,3 +474,10 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      - name: Preview URL
+        run: |
+          echo "🚀 Preview deployed successfully!"
+          echo "Preview URL: ${{ steps.netlify-deploy.outputs.deploy-url }}"
+          echo "## 🚀 Preview Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "Preview URL: ${{ steps.netlify-deploy.outputs.deploy-url }}" >> $GITHUB_STEP_SUMMARY

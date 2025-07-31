@@ -7,6 +7,9 @@ title: Open Source course in muscle physiology and EMG
 chapters:
   - file: chapter-1
   - file: chapter-2
+  - file: test-lesson.md
+  - file: test-lesson0.md
+
 #  - file: chapter-3
 #  - file: chapter-4
 #  - file: chapter-5
