@@ -6,6 +6,10 @@ sphinx-intl
 sphinx-togglebutton
 sphinx-copybutton
 myst-nb
-myst-parser
+sphinx-thebe
+sphinx-comments
+sphinx-external-toc
+sphinx-design
 sphinx-book-theme
 sphinxcontrib-bibtex
+sphinx-jupyterbook-latex
