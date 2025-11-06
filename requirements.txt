@@ -1,7 +1,11 @@
-jupyter-book>=1.0.0
+jupyter-book
 matplotlib
 numpy
 scipy
+sphinx-intl
 sphinx-togglebutton
 sphinx-copybutton
-sphinx-intl
+myst-nb
+myst-parser
+sphinx-book-theme
+sphinxcontrib-bibtex
