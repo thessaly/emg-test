@@ -1,5 +1,7 @@
-jupyter-book
+jupyter-book>=1.0.0
 matplotlib
 numpy
 scipy
 sphinx-togglebutton
+sphinx-copybutton
+sphinx-intl
